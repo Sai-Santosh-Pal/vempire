@@ -1,23 +1,10 @@
-import pip
-try:
-    from pytmx.util_pygame import load_pygame
-    import pygame
-except Exception as e:
-    print("Installing required packages...")
-    pip.main(['install', 'pytmx'])
-    pip.main(['install', 'pygame'])
-
 from settings import *
 from player import Player
 from sprites import *
-# from pytmx.util_pygame import load_pygame
+from pytmx.util_pygame import load_pygame
 from groups import AllSprites
 
-
-
 from random import choice
-
-
 
 class Game:
     def __init__(self):
