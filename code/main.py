@@ -1,10 +1,23 @@
+import pip
+try:
+    from pytmx.util_pygame import load_pygame
+    import pygame
+except Exception as e:
+    print("Installing required packages...")
+    pip.main(['install', 'pytmx'])
+    pip.main(['install', 'pygame'])
+
 from settings import *
 from player import Player
 from sprites import *
-from pytmx.util_pygame import load_pygame
+# from pytmx.util_pygame import load_pygame
 from groups import AllSprites
 
+
+
 from random import choice
+
+
 
 class Game:
     def __init__(self):
@@ -114,12 +127,13 @@ class Game:
                     self.impact_sound.play()
                     for sprite in collision_sprites:
                         sprite.destroy()
-                        self.coins += 3  # Award coins for each enemy killed
+                        self.coins += 3 
                     bullet.kill()
 
     def player_collision(self):
         if pygame.sprite.spritecollide(self.player, self.enemy_sprites, False, pygame.sprite.collide_mask):
             self.running = False
+            print("Game Over! You had:", self.coins, "coins and these upgrades:", self.upgrades)
 
     def draw_upgrade_menu(self, font):
         upgrades = [
@@ -188,7 +202,6 @@ class Game:
             if name == 'health':
                 self.player.max_health = 100 + self.upgrades['health'] * 20
                 self.player.health = self.player.max_health
-            # For enemy_slow, apply in your enemy logic (see below)
 
     def run(self):
         font = pygame.font.SysFont(None, 40)
@@ -201,7 +214,6 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
                 if event.type == self.enemy_event and not self.upgrade_menu:
-                    # Pass enemy_slow value to Enemy
                     slow = self.upgrades['enemy_slow'] * 20
                     Enemy(
                         choice(self.spawn_positions),
@@ -234,11 +246,9 @@ class Game:
             self.display_surface.fill('black')
             self.all_sprites.draw(self.player.rect.center)
 
-            # Draw coin counter
             coin_surf = font.render(f'Coins: {self.coins}', True, (255, 255, 0))
             self.display_surface.blit(coin_surf, (20, 20))
 
-            # Draw upgrade menu if open
             if self.upgrade_menu:
                 self.draw_upgrade_menu(font)
 
