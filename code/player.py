@@ -14,6 +14,10 @@ class Player(pygame.sprite.Sprite):
         self.speed = 500
         self.collision_sprites = collision_sprites
 
+        # health system
+        self.max_health = 100
+        self.health = 100
+
     def load_images(self):
         self.frames = {'left': [], 'right': [], 'up': [], 'down': []}
 
@@ -55,10 +59,12 @@ class Player(pygame.sprite.Sprite):
         if self.direction.y != 0: 
             self.state = 'down' if self.direction.y > 0 else 'up'
         
-
         # animate
         self.frame_index = self.frame_index + 5 * dt if self.direction else 0
         self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])]
+
+    def heal(self, amount):
+        self.health = min(self.health + amount, self.max_health)
 
     def update(self, dt):
         self.input()
