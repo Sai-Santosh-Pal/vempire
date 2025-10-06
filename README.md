@@ -5,6 +5,7 @@ A RPG-style game made in Pygame.
 ## Steps to download
 - Download .zip from [Releases]()
 - Extract it
+- VERY IMPORTANT - `pip install pytmx pygame` - RUN THIS BEFORE RUNNING THE CODE
 - Open in terminal and run `python code/main.py`
 
 ## How To Play & Instructions
